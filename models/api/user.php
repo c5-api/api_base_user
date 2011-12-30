@@ -1,6 +1,6 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");
 
-class ApiUser {
+class ApiUser extends ApiController {
 	
 	public function listUsers() {
 		Loader::model('user_list');
