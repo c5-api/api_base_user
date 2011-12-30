@@ -14,10 +14,6 @@ class ApiUserPackage extends Package {
 		return t("Provides API user management.");
 	}
 
-	public function on_start() {
-		//Loader::model('user', 'api_user');
-	}
-
 	public function install() {
 		$installed = Package::getByHandle('api');
 		if(!is_object($installed)) {
