@@ -47,5 +47,10 @@ class ApiUserPackage extends Package {
 
 		parent::install(); //install the addon - meh
 	}
+	
+	public function uninstall() {
+		ApiRegister::removeByPackage($this->pkgHandle);//remove all the apis
+		parent::uninstall();
+	}
 
 }
