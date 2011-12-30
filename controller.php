@@ -19,7 +19,10 @@ class ApiUserPackage extends Package {
 	}
 
 	public function install() {
-		
+		$installed = Package::getByHandle('api');
+		if(!is_object($installed)) {
+			throw new Exception(t('Please install the "API" package before installing %s', $this->getPackageName()));
+		}
 		$api = array();
 		$api['pkgHandle'] = $this->pkgHandle;
 		$api['route'] = 'users';
