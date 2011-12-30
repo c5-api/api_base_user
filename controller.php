@@ -48,6 +48,7 @@ class ApiUserPackage extends Package {
 	}
 	
 	public function uninstall() {
+		Loader::model('api_register', 'api');
 		ApiRegister::removeByPackage($this->pkgHandle);//remove all the apis
 		parent::uninstall();
 	}
