@@ -41,9 +41,8 @@ class ApiUserPackage extends Package {
 		$api2['via'][] = 'get';
 
 		Loader::model('api_register', 'api');
-		$r = new ApiRegister();
-		$r->add($api);
-		$r->add($api2);
+		ApiRegister::add($api);
+		ApiRegister::add($api2);
 
 		parent::install(); //install the addon - meh
 	}
