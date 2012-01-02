@@ -12,7 +12,7 @@ class ApiUser extends ApiController {
 	public function info($id) {
 		Loader::model('user_info');
 		$ui = UserInfo::getByID($id);
-		$resp = new ApiResponse();
+		$resp = ApiResponse::getInstance();
 		if(!is_object($ui)) {
 			$resp->setError(true);
 			$resp->setCode(404);
@@ -26,7 +26,7 @@ class ApiUser extends ApiController {
 	
 	public function addUser() {
 		Loader::model('user_info');
-		$resp = new ApiResponse();
+		$resp = ApiResponse::getInstance();
 		if(is_object(UserInfo::getByUserName($_POST['uName'])) || is_object(UserInfo::getByEmail($_POST['uEmail']))) {
 			$resp->setError(true);
 			$resp->setCode(409);
