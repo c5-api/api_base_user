@@ -71,4 +71,28 @@ class ApiConfig extends ApiController {
 		$resp->send();
 		
 	}
+	
+	public function delete($pkg, $id = null) {
+		if(!$id) {
+			$id = $pkg;
+			unset($pkg);
+		}
+		//echo $id;
+		//$id = $_POST['key'];
+		$cfg = new Config();
+		if($pkg) {
+			$cfg->setPackageObject(Package::getByHandle($pkg));
+		}
+		$conf = $cfg->get($id, true);
+		$resp = ApiResponse::getInstance();
+		if(is_object($conf)) {
+			$cfg->clear($key);
+			$resp->send();
+		} else {
+			$resp->setError(true);
+			$resp->setCode(404);
+			$resp->setMessage('ERROR_NOT_FOUND');
+			$resp->send();
+		}
+	}
 }

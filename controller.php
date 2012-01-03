@@ -60,12 +60,30 @@ class ApiUserPackage extends Package {
 		$api5['method'] = 'add';
 		$api5['via'][] = 'post';
 
+		$api6 = array();
+		$api6['pkgHandle'] = $this->pkgHandle;
+		$api6['route'] = 'config/:key';
+		$api6['routeName'] = t('Delete Site Config Entry');
+		$api6['class'] = 'config';
+		$api6['method'] = 'delete';
+		$api6['via'][] = 'delete';
+		
+		$api7 = array();
+		$api7['pkgHandle'] = $this->pkgHandle;
+		$api7['route'] = 'config/:pkg/:key';
+		$api7['routeName'] = t('Delete Package Config Entry');
+		$api7['class'] = 'config';
+		$api7['method'] = 'delete';
+		$api7['via'][] = 'delete';
+
 		Loader::model('api_register', 'api');
 		ApiRegister::add($api);
 		ApiRegister::add($api2);
 		ApiRegister::add($api3);
 		ApiRegister::add($api4);
 		ApiRegister::add($api5);
+		ApiRegister::add($api6);
+		ApiRegister::add($api7);
 
 		parent::install(); //install the addon - meh
 	}
