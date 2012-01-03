@@ -35,10 +35,37 @@ class ApiUserPackage extends Package {
 		$api2['method'] = 'info';
 		$api2['filters']['id'] = '(\d+)';//:id can only be numerical
 		$api2['via'][] = 'get';
+		
+		$api3 = array();
+		$api3['pkgHandle'] = $this->pkgHandle;
+		$api3['route'] = 'config/:key';
+		$api3['routeName'] = t('Get Site Config Entry');
+		$api3['class'] = 'config';
+		$api3['method'] = 'get';
+		$api3['via'][] = 'get';
+		
+		$api4 = array();
+		$api4['pkgHandle'] = $this->pkgHandle;
+		$api4['route'] = 'config/:pkg/:key';
+		$api4['routeName'] = t('Get Package Config Entry');
+		$api4['class'] = 'config';
+		$api4['method'] = 'get';
+		$api4['via'][] = 'get';
+		
+		$api5 = array();
+		$api5['pkgHandle'] = $this->pkgHandle;
+		$api5['route'] = 'config/new';
+		$api5['routeName'] = t('Add Config Entry');
+		$api5['class'] = 'config';
+		$api5['method'] = 'add';
+		$api5['via'][] = 'post';
 
 		Loader::model('api_register', 'api');
 		ApiRegister::add($api);
 		ApiRegister::add($api2);
+		ApiRegister::add($api3);
+		ApiRegister::add($api4);
+		ApiRegister::add($api5);
 
 		parent::install(); //install the addon - meh
 	}

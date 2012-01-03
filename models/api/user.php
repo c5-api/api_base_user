@@ -16,7 +16,7 @@ class ApiUser extends ApiController {
 		if(!is_object($ui)) {
 			$resp->setError(true);
 			$resp->setCode(404);
-			$resp->setMessage(t('Invalid User ID.'));
+			$resp->setMessage('ERROR_INVALID_USER');
 			$resp->send();
 		} else {
 			$resp->setData($ui);
@@ -30,7 +30,7 @@ class ApiUser extends ApiController {
 		if(is_object(UserInfo::getByUserName($_POST['uName'])) || is_object(UserInfo::getByEmail($_POST['uEmail']))) {
 			$resp->setError(true);
 			$resp->setCode(409);
-			$resp->setMessage(t('A user exists with that username or email.'));
+			$resp->setMessage('ERROR_ALREADY_EXISTS');
 			$resp->send();
 		}
 		$data = array();
@@ -43,10 +43,7 @@ class ApiUser extends ApiController {
 			$resp->setData($ui);
 			$resp->send();
 		} else {
-			$resp->setError(true);
-			$resp->setCode(500);
-			$resp->setMessage(t('An unknown error has occured.'));
-			$resp->send();
+			throw new Exception('ERROR_INTERNAL_ERROR', 500);
 		}
 	}
 }
