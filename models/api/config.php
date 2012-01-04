@@ -2,7 +2,17 @@
 
 class ApiConfig extends ApiController {
 	
-	public function get($pkg, $id = null) {
+	public function getConf($pkg, $id = null) {
+		if(API_REQUEST_METHOD == 'GET') {
+			$self = new self;
+			return $self->get($pkg, $id);
+		} else if(API_REQUEST_METHOD == 'DELETE') {
+			$self = new self;
+			return $self->delete($pkg, $id);
+		}
+	}
+	
+	private function get($pkg, $id = null) {
 		if(!$id) {
 			$id = $pkg;
 			unset($pkg);
@@ -72,7 +82,7 @@ class ApiConfig extends ApiController {
 		
 	}
 	
-	public function delete($pkg, $id = null) {
+	private function delete($pkg, $id = null) {
 		if(!$id) {
 			$id = $pkg;
 			unset($pkg);
