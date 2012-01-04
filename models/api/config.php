@@ -10,6 +10,7 @@ class ApiConfig extends ApiController {
 			$self = new self;
 			return $self->delete($pkg, $id);
 		}
+		throw new Exception('ERROR_INVALID_ROUTE', 501);
 	}
 	
 	private function get($pkg, $id = null) {
