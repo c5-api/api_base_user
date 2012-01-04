@@ -1,13 +1,13 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");
 
-class ApiUserPackage extends Package {
+class ApiBaseUserPackage extends Package {
 
-	protected $pkgHandle = 'api_user';
+	protected $pkgHandle = 'api_base_user';
 	protected $appVersionRequired = '5.5.0';
 	protected $pkgVersion = '1.0';
 
 	public function getPackageName() {
-		return t("Api:User");
+		return t("Api:Base:User");
 	}
 
 	public function getPackageDescription() {
