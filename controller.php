@@ -19,11 +19,18 @@ class ApiBaseUserPackage extends Package {
 		if(!is_object($installed)) {
 			throw new Exception(t('Please install the "API" package before installing %s', $this->getPackageName()));
 		}
+		
+		$this->refreshRoutes();
+
+		parent::install(); //install the addon - meh
+	}
+	
+	public function refreshRoutes() {
 		$api = array();
 		$api['pkgHandle'] = $this->pkgHandle;
 		$api['route'] = 'users';
 		$api['routeName'] = t('List Users');
-		$api['class'] = 'user';
+		$api['class'] = 'User';
 		$api['method'] = 'listUsers';
 		$api['via'][] = 'get';
 		
@@ -31,7 +38,7 @@ class ApiBaseUserPackage extends Package {
 		$api2['pkgHandle'] = $this->pkgHandle;
 		$api2['route'] = 'users/:id';
 		$api2['routeName'] = t('User Info By ID');
-		$api2['class'] = 'user';
+		$api2['class'] = 'User';
 		$api2['method'] = 'info';
 		$api2['filters']['id'] = '(\d+)';//:id can only be numerical
 		$api2['via'][] = 'get';
@@ -39,8 +46,6 @@ class ApiBaseUserPackage extends Package {
 		Loader::model('api_register', 'api');
 		ApiRegister::add($api);
 		ApiRegister::add($api2);
-
-		parent::install(); //install the addon - meh
 	}
 	
 	public function uninstall() {
