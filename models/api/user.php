@@ -3,10 +3,18 @@
 class ApiUser extends ApiController {
 	
 	public function listUsers() {
-		Loader::model('user_list');
+		//@TODO make this use the api
+		/*Loader::model('user_list');
 		$ul = new UserList();
 		$ul->setItemsPerPage(-1);
-		return $ul->getPage();
+		return $ul->getPage();*/
+		$db = Loader::db();
+		$r = $db->Execute('SELECT uID, uName FROM Users');
+		$u = array();
+		while($row = $r->FetchRow()) {
+			$u[$row['uID']] = $row['uName'];
+		}
+		return $u;
 	}
 	
 	public function info($id) {
@@ -19,7 +27,27 @@ class ApiUser extends ApiController {
 			$resp->setMessage('ERROR_INVALID_USER');
 			$resp->send();
 		} else {
+			unset($ui->error);
+			unset($ui->uPassword);
 			$resp->setData($ui);
+			$resp->send();
+		}
+	}
+	
+	public function attributes($id) {
+		//@TODO possibly overhaul
+		Loader::model('user_info');
+		$ui = UserInfo::getByID($id);
+		$resp = ApiResponse::getInstance();
+		if(!is_object($ui)) {
+			$resp->setError(true);
+			$resp->setCode(404);
+			$resp->setMessage('ERROR_INVALID_USER');
+			$resp->send();
+		} else {
+			Loader::model('attribute/categories/user');
+			$ua = UserAttributeKey::getAttributes($id);
+			$resp->setData($ua);
 			$resp->send();
 		}
 	}

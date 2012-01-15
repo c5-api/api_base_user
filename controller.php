@@ -43,9 +43,19 @@ class ApiBaseUserPackage extends Package {
 		$api2['filters']['id'] = '(\d+)';//:id can only be numerical
 		$api2['via'][] = 'get';
 
+		$api3 = array();
+		$api3['pkgHandle'] = $this->pkgHandle;
+		$api3['route'] = 'users/:id/attributes';
+		$api3['routeName'] = t('User Attributes By ID');
+		$api3['class'] = 'User';
+		$api3['method'] = 'attributes';
+		$api3['filters']['id'] = '(\d+)';//:id can only be numerical
+		$api3['via'][] = 'get';
+		
 		Loader::model('api_register', 'api');
 		ApiRegister::add($api);
 		ApiRegister::add($api2);
+		ApiRegister::add($api3);
 	}
 	
 	public function uninstall() {
