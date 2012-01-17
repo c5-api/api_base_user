@@ -26,9 +26,12 @@ class ApiBaseUserPackage extends Package {
 	}
 	
 	public function refreshRoutes() {
+	
+		$baseRoute = 'users';
+		
 		$api = array();
 		$api['pkgHandle'] = $this->pkgHandle;
-		$api['route'] = 'users';
+		$api['route'] = $baseRoute;
 		$api['routeName'] = t('List Users');
 		$api['class'] = 'User';
 		$api['method'] = 'listUsers';
@@ -36,26 +39,46 @@ class ApiBaseUserPackage extends Package {
 		
 		$api2 = array();
 		$api2['pkgHandle'] = $this->pkgHandle;
-		$api2['route'] = 'users/:id';
+		$api2['route'] = $baseRoute.'/:id';
 		$api2['routeName'] = t('User Info By ID');
 		$api2['class'] = 'User';
 		$api2['method'] = 'info';
 		$api2['filters']['id'] = '(\d+)';//:id can only be numerical
 		$api2['via'][] = 'get';
 
-		$api3 = array();
-		$api3['pkgHandle'] = $this->pkgHandle;
-		$api3['route'] = 'users/:id/attributes';
-		$api3['routeName'] = t('User Attributes By ID');
-		$api3['class'] = 'User';
-		$api3['method'] = 'attributes';
-		$api3['filters']['id'] = '(\d+)';//:id can only be numerical
-		$api3['via'][] = 'get';
+		$attr1 = array();
+		$attr1['pkgHandle'] = $this->pkgHandle;
+		$attr1['route'] = $baseRoute.'/-/attributes';
+		$attr1['routeName'] = t('User Attributes List');
+		$attr1['class'] = 'UserAttributes';
+		$attr1['method'] = 'attributes';
+		$attr1['via'][] = 'get';
+		
+		$attr2 = array();
+		$attr2['pkgHandle'] = $this->pkgHandle;
+		$attr2['route'] = $baseRoute.'/-/attributes/info/:id';
+		$attr2['routeName'] = t('User Attributes List');
+		$attr2['class'] = 'UserAttributes';
+		$attr2['method'] = 'attributesInfo';
+		$attr2['filters']['id'] = '(\d+)';//:id can only be numerical
+		$attr2['via'][] = 'get';
+
+// 		$api4 = array();
+// 		$api4['pkgHandle'] = $this->pkgHandle;
+// 		$api4['route'] = $baseRoute.'/:id/attributes/-/update';
+// 		$api4['routeName'] = t('Update User Attributes By ID');
+// 		$api4['class'] = 'User';
+// 		$api4['method'] = 'attributesUpdate';
+// 		$api4['filters']['id'] = '(\d+)';//:id can only be numerical
+// 		$api4['via'][] = 'get';
+//		$api4['via'][] = 'post';
 		
 		Loader::model('api_register', 'api');
 		ApiRegister::add($api);
 		ApiRegister::add($api2);
-		ApiRegister::add($api3);
+		
+		ApiRegister::add($attr1);
+		ApiRegister::add($attr2);
 	}
 	
 	public function uninstall() {

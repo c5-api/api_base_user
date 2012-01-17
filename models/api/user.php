@@ -34,24 +34,6 @@ class ApiUser extends ApiController {
 		}
 	}
 	
-	public function attributes($id) {
-		//@TODO possibly overhaul
-		Loader::model('user_info');
-		$ui = UserInfo::getByID($id);
-		$resp = ApiResponse::getInstance();
-		if(!is_object($ui)) {
-			$resp->setError(true);
-			$resp->setCode(404);
-			$resp->setMessage('ERROR_INVALID_USER');
-			$resp->send();
-		} else {
-			Loader::model('attribute/categories/user');
-			$ua = UserAttributeKey::getAttributes($id);
-			$resp->setData($ua);
-			$resp->send();
-		}
-	}
-	
 	public function addUser() {
 		Loader::model('user_info');
 		$resp = ApiResponse::getInstance();
