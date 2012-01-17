@@ -46,6 +46,22 @@ class ApiBaseUserPackage extends Package {
 		$api2['filters']['id'] = '(\d+)';//:id can only be numerical
 		$api2['via'][] = 'get';
 
+		$api3 = array();
+		$api3['pkgHandle'] = $this->pkgHandle;
+		$api3['route'] = $baseRoute.'/add';
+		$api3['routeName'] = t('Add User');
+		$api3['class'] = 'User';
+		$api3['method'] = 'addUser';
+		$api3['via'][] = 'post';
+		
+		$api4 = array();
+		$api4['pkgHandle'] = $this->pkgHandle;
+		$api4['route'] = $baseRoute.'/change_password';
+		$api4['routeName'] = t('Change Password');
+		$api4['class'] = 'User';
+		$api4['method'] = 'changePassword';
+		$api4['via'][] = 'post';
+
 		$attr1 = array();
 		$attr1['pkgHandle'] = $this->pkgHandle;
 		$attr1['route'] = $baseRoute.'/-/attributes';
@@ -76,6 +92,8 @@ class ApiBaseUserPackage extends Package {
 		Loader::model('api_register', 'api');
 		ApiRegister::add($api);
 		ApiRegister::add($api2);
+		ApiRegister::add($api3);
+		ApiRegister::add($api4);
 		
 		ApiRegister::add($attr1);
 		ApiRegister::add($attr2);
